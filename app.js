@@ -5,6 +5,9 @@ var bodyParser = require('body-parser');
 var app = express();
 
 //cargar rutas
+var user_routes = require('./routes/user');
+
+
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
 
@@ -13,10 +16,9 @@ app.use(express.json());
 
 
 //rutas base
-app.get('/pruebas',function(req,res){
-    res.status(200).send({message:'Bienvenidos al curso de means2'});
+app.use('/api',user_routes);
 
-});
+
 module.exports = app;
 
 

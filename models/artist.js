@@ -7,4 +7,4 @@ var ArtistSchema = Schema({
     
     image: String
 });
-module.exports = mongoose.model('Artist',UserSchema);
+module.exports = mongoose.model('Artist',ArtistSchema);
