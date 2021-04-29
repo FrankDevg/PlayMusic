@@ -14,7 +14,7 @@ function saveUser(req, res) {
     user.name = params.name;
     user.surname = params.surname;
     user.email = params.email;
-    user.role = 'ROLE_USER';
+    user.role = 'ROLE_ADMIN';
     user.image = 'null';
     if (params.password) {
         // encriptar contraseña y guardar datos
@@ -48,7 +48,41 @@ function saveUser(req, res) {
 
 
 }
+function loginUser(req,res){
+    var params = req.body;
+    var email = params.email;
+    var password = params.password;
+    
+    User.findOne({email:email},(err,user)=>{
+        if(err){
+            res.status(500).send({message:'Error en la petición'});
+        }else {
+            console.log(user);
+            if(!user){
+                res.status(404).send({message:'El usuario no existe'});
+            }else {
+                //comprobar la contraseña
+                bcrypt.compare(password,user.password, function(err,check){
+                    if(check){
+                        //devolver los datos del usuario logueado
+                        if(params.getHash){
+                            //devolver un token de JWT
+
+                        }else{
+                            res.status(200).send({user});
+                        }
+                    }else{
+                        res.status(404).send({message:'El usuario no a podido loguearse'});
+                    }
+                })
+            }
+        }
+    });
+
+
+}
 module.exports = {
     pruebas,
-    saveUser
+    saveUser,
+    loginUser
 };
