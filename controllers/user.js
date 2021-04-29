@@ -105,9 +105,22 @@ function updateUser(req,res){
         }
     });
 }
+function uploadImage(req,res){
+    var userId= req.params.id;
+    var file_name = 'Imagen no subido...';
+    if(req.files){
+        var file_path = req.files.image.path;
+        console.log(file_path);
+
+    }else{
+        res.status(500).send({message:'No has subido ninguna imagen....'});
+
+    }
+}
 module.exports = {
     pruebas,
     saveUser,
     loginUser,
-    updateUser
+    updateUser,
+    uploadImage
 };
